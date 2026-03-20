@@ -1,10 +1,12 @@
 package com.FinalProject.RegistrationSystem.controller;
 
 
+import com.FinalProject.RegistrationSystem.dto.CreateWorkshopRequest;
 import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.service.WorkshopService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,22 +24,19 @@ public class WorkshopController {
 
     //Create Workshop
     @PostMapping
-    public Workshop createWorkShop(@RequestBody Workshop workshop){
-        return workshopService.createWorkshop(workshop);
+    public Workshop createWorkShop(@RequestBody CreateWorkshopRequest request){
+        return workshopService.create(request);
     }
     //Get all Workshops
-    @GetMapping
+    @GetMapping("/api/v1/workshops")
     public List<Workshop> getAllWorkshops(){
-        return workshopService.getAllWorkshops();
+        return workshopService.getAll();
     }
     //Get Workshops by Id
-    @GetMapping("/{id}")
-    public Workshop getWorkshopById(@PathVariable Long id){
-        return workshopService.getWorkshopById(id);
+    @GetMapping("/api/v1/workshops{id}")
+    public Workshop getById(@PathVariable Long id){
+        return workshopService.getById(id);
     }
-    @Transactional
-    @DeleteMapping
-    public Void deleteWorkshop(@PathVariable Long id){
-        workshopService.cancelWorkshop(id);
-    }
+
+
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/registration")
+@RequestMapping("/api/v1")
 public class RegistrationController {
 
     @Autowired
@@ -20,22 +20,22 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping
+    @PostMapping("/workshops/{id}/registrations")
     public Registration register(@RequestBody CreateRegistrationRequest request){
         return registrationService.register(request);
 
     }
-    @GetMapping
+    @GetMapping("/registrations")
     public List<Registration> getRegistrations(){
         return registrationService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/registrations/{id}")
     public Registration getRegistrationsById(@PathVariable Long id){
         return registrationService.getById(id);
     }
     @Transactional
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/registrations/{registrationId}")
     public void deleteRegistration(@PathVariable Long id){
         registrationService.cancelRegistration(id);
     }
