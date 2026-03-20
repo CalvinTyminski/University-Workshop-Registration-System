@@ -61,8 +61,8 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void cancelRegistration(Long registrationid, Long userId) {
-        Registration registration = registrationRepository.findById(registrationid)
+    public void cancelRegistration(Long registrationId, Long userId) {
+        Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(
                         () -> new RuntimeException("Registration not found")
                 );

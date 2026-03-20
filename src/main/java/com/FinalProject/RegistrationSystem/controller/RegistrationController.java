@@ -14,29 +14,20 @@ import java.util.List;
 public class RegistrationController {
 
     @Autowired
-    private final RegistrationService registrationService;
-
-    public RegistrationController(RegistrationService registrationService) {
-        this.registrationService = registrationService;
-    }
+    private RegistrationService registrationService;
 
     @PostMapping("/workshops/{id}/registrations")
     public Registration register(@RequestBody CreateRegistrationRequest request){
         return registrationService.register(request);
-
-    }
-    @GetMapping("/registrations")
-    public List<Registration> getRegistrations(){
-        return registrationService.getAll();
     }
 
-    @GetMapping("/registrations/{id}")
-    public Registration getRegistrationsById(@PathVariable Long id){
-        return registrationService.getById(id);
+    @GetMapping("/me/registrations")
+    public List<Registration> getMyRegistrations(@RequestParam Long userId){
+        return registrationService.getAllUserRegistrations(userId);
     }
-    @Transactional
+
     @DeleteMapping("/registrations/{registrationId}")
-    public void deleteRegistration(@PathVariable Long id){
-        registrationService.cancelRegistration(id);
+    public void cancelRegistration(@PathVariable Long registrationId, @RequestParam Long userId){
+        registrationService.cancelRegistration(registrationId, userId);
     }
 }
