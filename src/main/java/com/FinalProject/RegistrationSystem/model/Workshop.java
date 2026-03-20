@@ -1,13 +1,11 @@
 package com.FinalProject.RegistrationSystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -21,14 +19,16 @@ public class Workshop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-    public String title;
-    public String description;
-    public String location;
-    public LocalDateTime start_datetime;
-    public int total_seats;
-    public int seats_remaining;
-    public enum status {
+    private Long id;
+    private String title;
+    private String description;
+    private String location;
+    private LocalDateTime start_datetime;
+    private int total_seats;
+    private int seats_remaining;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    public enum Status {
         ACTIVE,
         CANCELLED
     }
