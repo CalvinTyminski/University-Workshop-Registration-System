@@ -9,9 +9,11 @@ import lombok.Setter;
 import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "workshop_id"})
+)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,23 +22,26 @@ public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true)
-    public User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "workshop_id", unique = true)
-    public Workshop workshop;
+    @JoinColumn(name = "workshop_id", nullable = false)
+    private Workshop workshop;
 
-    public enum status {
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
         ACTIVE,
         CANCELLED
     }
 
-    public LocalDateTime created_at;
+    private LocalDateTime created_at;
 
-    public LocalDateTime cancelled_at;
+    private LocalDateTime cancelled_at;
 
 }
