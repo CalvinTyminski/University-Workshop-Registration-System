@@ -28,6 +28,10 @@ public class RegistrationService {
                         () -> new RuntimeException("Workshop does not exist")
                 );
 
+        if (registrationRepository.userExists(request.user_id, request.workshop_id)) {
+            throw new RuntimeException("User already registered for this workshop");
+        }
+
         Registration registration = new Registration();
         registration.setWorkshop_id(request.workshop_id);
         registration.setUser_id(request.user_id);
