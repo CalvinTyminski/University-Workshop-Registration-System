@@ -27,8 +27,8 @@ public class Workshop {
     private int total_seats;
     private int seats_remaining;
     @Enumerated(EnumType.STRING)
-    private Status status;
-    public enum Status {
+    private workshopStatus status;
+    public enum workshopStatus {
         ACTIVE,
         CANCELLED
     }
