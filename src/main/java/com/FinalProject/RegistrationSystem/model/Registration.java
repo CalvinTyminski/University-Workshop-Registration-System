@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -19,8 +21,13 @@ public class Registration {
     @Id
     @GeneratedValue
     public Long id;
-    public String name;
-    public String email;
-    public String password_hash;
-    public String role;
+
+    public Long workshop_id;
+
+    public String status;
+
+    public Date created_at;
+
+    public Date cancelled_at;
+
 }
