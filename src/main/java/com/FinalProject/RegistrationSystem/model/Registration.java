@@ -33,9 +33,9 @@ public class Registration {
     private Workshop workshop;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private registrationStatus registrationStatus;
 
-    public enum Status {
+    public enum registrationStatus {
         ACTIVE,
         CANCELLED
     }

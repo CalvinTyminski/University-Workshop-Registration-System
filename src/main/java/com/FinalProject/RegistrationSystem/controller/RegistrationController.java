@@ -22,7 +22,7 @@ public class RegistrationController {
 
     @PostMapping
     public Registration register(@RequestBody CreateRegistrationRequest request){
-        return registrationService.create(request);
+        return registrationService.register(request);
 
     }
     @GetMapping
@@ -37,6 +37,6 @@ public class RegistrationController {
     @Transactional
     @DeleteMapping("/{id}")
     public void deleteRegistration(@PathVariable Long id){
-        registrationService.deleteRegistration(id);
+        registrationService.cancelRegistration(id);
     }
 }

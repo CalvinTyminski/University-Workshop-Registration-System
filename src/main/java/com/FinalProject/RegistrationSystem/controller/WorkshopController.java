@@ -38,6 +38,6 @@ public class WorkshopController {
     @Transactional
     @DeleteMapping
     public Void deleteWorkshop(@PathVariable Long id){
-        workshopService.deleteWorkshop(id);
+        workshopService.cancelWorkshop(id);
     }
 }
