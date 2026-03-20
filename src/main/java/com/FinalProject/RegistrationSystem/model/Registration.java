@@ -22,6 +22,8 @@ public class Registration {
     @GeneratedValue
     public Long id;
 
+    public Long user_id;
+
     public Long workshop_id;
 
     public String status;
