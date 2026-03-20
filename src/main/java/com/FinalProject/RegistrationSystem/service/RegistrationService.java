@@ -54,6 +54,9 @@ public class RegistrationService {
                 );
     }
 
+    public List<Registration> findByWorkshopId(Long workshopId) {
+        return registrationRepository.findByWorkshopId(workshopId);
+    }
     @Transactional
     public void deleteRegistration(Long id) {
         if (registrationRepository.existsById(id)) {
