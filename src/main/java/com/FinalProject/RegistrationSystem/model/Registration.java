@@ -1,14 +1,14 @@
 package com.FinalProject.RegistrationSystem.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,17 +19,24 @@ import java.util.Date;
 public class Registration {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    public Long user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", unique = true)
+    public User user;
 
-    public Long workshop_id;
+    @ManyToOne
+    @JoinColumn(name = "workshop_id", unique = true)
+    public Workshop workshop;
 
-    public String status;
+    public enum status {
+        ACTIVE,
+        CANCELLED
+    }
 
-    public Date created_at;
+    public LocalDateTime created_at;
 
-    public Date cancelled_at;
+    public LocalDateTime cancelled_at;
 
 }
