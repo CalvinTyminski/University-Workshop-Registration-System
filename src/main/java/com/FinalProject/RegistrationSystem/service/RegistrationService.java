@@ -8,6 +8,7 @@ import com.FinalProject.RegistrationSystem.repository.UserRepository;
 import com.FinalProject.RegistrationSystem.repository.WorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class RegistrationService {
     @Autowired
     private WorkshopRepository workshopRepository;
 
+    @Transactional
     public Registration create(CreateRegistrationRequest request) {
         Workshop workshop = workshopRepository.findById(request.workshop_id)
                 .orElseThrow(
@@ -50,5 +52,12 @@ public class RegistrationService {
                 .orElseThrow(
                         () -> new RuntimeException("Registration does not exist")
                 );
+    }
+
+    @Transactional
+    public void deleteRegistration(Long id) {
+        if (registrationRepository.existsById(id)) {
+            registrationRepository.deleteById(id);
+        }
     }
 }
