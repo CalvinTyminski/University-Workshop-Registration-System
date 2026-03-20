@@ -13,13 +13,17 @@ import org.springframework.data.annotation.Id;
 @Getter
 @Setter
 @AllArgsConstructor
-public class User {
+public class Workshop {
 
     @Id
     @GeneratedValue
     public Long id;
-    public String name;
-    public String email;
-    public String password_hash;
-    public String role;
+    public String title;
+    public String description;
+    public String location;
+    public String start_datetime;
+    public int total_seats;
+    public int seats_remaining;
+    public String status;
+
 }
