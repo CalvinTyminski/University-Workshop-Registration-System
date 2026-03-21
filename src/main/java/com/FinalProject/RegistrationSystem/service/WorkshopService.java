@@ -36,6 +36,20 @@ public class WorkshopService {
         return workshopRepository.save(workshop);
     }
 
+    public Workshop update(Long id, Workshop updated) {
+
+        Workshop workshop = workshopRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Workshop not found"));
+
+        workshop.setTitle(updated.getTitle());
+        workshop.setDescription(updated.getDescription());
+        workshop.setLocation(updated.getLocation());
+        workshop.setStart_datetime(updated.getStart_datetime());
+        workshop.setTotal_seats(updated.getTotal_seats());
+
+        return workshopRepository.save(workshop);
+    }
+
     public List<Workshop> getAll() {
         return workshopRepository.findAll();
     }
