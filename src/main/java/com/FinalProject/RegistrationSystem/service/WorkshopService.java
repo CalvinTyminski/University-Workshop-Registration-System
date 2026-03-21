@@ -25,7 +25,7 @@ public class WorkshopService {
         workshop.setStart_datetime(request.start_datetime);
         workshop.setStatus(Workshop.workshopStatus.ACTIVE);
         workshop.setTotal_seats(request.total_seats);
-        workshop.setSeats_remaining(workshop.getTotal_seats());
+        workshop.setSeats_remaining(request.total_seats);
 
 
         return workshopRepository.save(workshop);
@@ -40,7 +40,13 @@ public class WorkshopService {
         workshop.setDescription(updated.getDescription());
         workshop.setLocation(updated.getLocation());
         workshop.setStart_datetime(updated.getStart_datetime());
-        workshop.setTotal_seats(updated.getTotal_seats());
+        int oldTotal = workshop.getTotal_seats();
+        int newTotal = updated.getTotal_seats();
+
+        int difference = newTotal - oldTotal;
+
+        workshop.setTotal_seats(newTotal);
+        workshop.setSeats_remaining(workshop.getSeats_remaining() + difference);
 
         return workshopRepository.save(workshop);
     }
