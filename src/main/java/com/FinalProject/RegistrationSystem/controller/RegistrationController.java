@@ -17,8 +17,8 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/workshops/{id}/registrations")
-    public Registration register(@RequestBody CreateRegistrationRequest request){
-        return registrationService.register(request);
+    public Registration register(@PathVariable Long id, @RequestBody Long userId){
+        return registrationService.register(id, userId);
     }
 
     @GetMapping("/me/registrations")

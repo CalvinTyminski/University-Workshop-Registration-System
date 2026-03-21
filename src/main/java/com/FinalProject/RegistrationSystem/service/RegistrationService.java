@@ -28,13 +28,13 @@ public class RegistrationService {
     private WorkshopRepository workshopRepository;
 
     @Transactional
-    public Registration register(CreateRegistrationRequest request) {
-        Workshop workshop = workshopRepository.findById(request.workshop_id)
+    public Registration register(Long id, Long userId) {
+        Workshop workshop = workshopRepository.findById(id)
                 .orElseThrow(
                         () -> new BadRequestException("Workshop does not exist")
                 );
 
-        User user = userRepository.findById(request.user_id)
+        User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new BadRequestException("User does not exist")
                 );
@@ -47,7 +47,7 @@ public class RegistrationService {
             throw new ConflictException("Cannot register for past workshop");
         }
 
-        if (registrationRepository.existsByUserAndWorkshop(request.user_id, request.workshop_id)) {
+        if (registrationRepository.existsByUserAndWorkshop(user, workshop)) {
             throw new ConflictException("User already registered for this workshop");
         }
 
