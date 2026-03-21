@@ -1,6 +1,7 @@
 package com.FinalProject.RegistrationSystem.service;
 
 import com.FinalProject.RegistrationSystem.dto.CreateRegistrationRequest;
+import com.FinalProject.RegistrationSystem.exception.ConflictException;
 import com.FinalProject.RegistrationSystem.model.Registration;
 import com.FinalProject.RegistrationSystem.model.User;
 import com.FinalProject.RegistrationSystem.model.Workshop;
@@ -38,15 +39,15 @@ public class RegistrationService {
                 );
 
         if (workshop.getSeats_remaining()<=0) {
-            throw new RuntimeException("Workshop is full");
+            throw new ConflictException("Workshop is full");
         }
 
         if (workshop.getStart_datetime().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Workshop must be in the future");
+            throw new ConflictException("Cannot register for past workshop");
         }
 
         if (registrationRepository.existsByUserAndWorkshop(request.user_id, request.workshop_id)) {
-            throw new RuntimeException("User already registered for this workshop");
+            throw new ConflictException("User already registered for this workshop");
         }
 
 
@@ -77,17 +78,6 @@ public class RegistrationService {
         registration.setCancelled_at(LocalDateTime.now());
 
         workshop.setSeats_remaining(workshop.getSeats_remaining() +1);
-    }
-
-    public List<Registration> getAll() {
-        return registrationRepository.findAll();
-    }
-
-    public Registration getById(Long id) {
-        return registrationRepository.findById(id)
-                .orElseThrow(
-                        () -> new RuntimeException("Registration does not exist")
-                );
     }
 
     public List<Registration> getAllWorkshopRegistrations(Long workshopId) {
