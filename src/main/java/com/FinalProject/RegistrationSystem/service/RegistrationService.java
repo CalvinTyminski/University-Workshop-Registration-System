@@ -1,6 +1,7 @@
 package com.FinalProject.RegistrationSystem.service;
 
 import com.FinalProject.RegistrationSystem.dto.CreateRegistrationRequest;
+import com.FinalProject.RegistrationSystem.exception.BadRequestException;
 import com.FinalProject.RegistrationSystem.exception.ConflictException;
 import com.FinalProject.RegistrationSystem.model.Registration;
 import com.FinalProject.RegistrationSystem.model.User;
@@ -30,12 +31,12 @@ public class RegistrationService {
     public Registration register(CreateRegistrationRequest request) {
         Workshop workshop = workshopRepository.findById(request.workshop_id)
                 .orElseThrow(
-                        () -> new RuntimeException("Workshop does not exist")
+                        () -> new BadRequestException("Workshop does not exist")
                 );
 
         User user = userRepository.findById(request.user_id)
                 .orElseThrow(
-                        () -> new RuntimeException("User does not exist")
+                        () -> new BadRequestException("User does not exist")
                 );
 
         if (workshop.getSeats_remaining()<=0) {
@@ -65,13 +66,13 @@ public class RegistrationService {
     public void cancelRegistration(Long registrationId, Long userId) {
         Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(
-                        () -> new RuntimeException("Registration not found")
+                        () -> new BadRequestException("Registration not found")
                 );
 
         Workshop workshop = registration.getWorkshop();
 
         if(workshop.getStart_datetime().isBefore(LocalDateTime.now())){
-            throw new RuntimeException("Workshop already started");
+            throw new BadRequestException("Workshop already started");
         }
 
         registration.setRegistrationStatus(Registration.registrationStatus.CANCELLED);

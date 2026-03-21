@@ -1,6 +1,7 @@
 package com.FinalProject.RegistrationSystem.service;
 
 import com.FinalProject.RegistrationSystem.dto.CreateWorkshopRequest;
+import com.FinalProject.RegistrationSystem.exception.BadRequestException;
 import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.repository.WorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class WorkshopService {
 
     @Transactional
     public Workshop create(CreateWorkshopRequest request) {
+        if (request.start_datetime.isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("Workshop must be in the future");
+        }
         Workshop workshop = new Workshop();
         workshop.setTitle(request.title);
         workshop.setDescription(request.description);
@@ -34,7 +38,7 @@ public class WorkshopService {
     public Workshop update(Long id, Workshop updated) {
 
         Workshop workshop = workshopRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Workshop not found"));
+                .orElseThrow(() -> new BadRequestException("Workshop not found"));
 
         workshop.setTitle(updated.getTitle());
         workshop.setDescription(updated.getDescription());
@@ -58,14 +62,14 @@ public class WorkshopService {
     public Workshop getById(Long id) {
         return workshopRepository.findById(id)
                 .orElseThrow(
-                        () -> new RuntimeException("Workshop does not exist")
+                        () -> new BadRequestException("Workshop does not exist")
                 );
     }
 
     @Transactional
     public void cancelWorkshop(Long id) {
         Workshop workshop = workshopRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Workshop not found"));
+                .orElseThrow(() -> new BadRequestException("Workshop not found"));
 
         workshop.setStatus(Workshop.workshopStatus.CANCELLED);
     }
