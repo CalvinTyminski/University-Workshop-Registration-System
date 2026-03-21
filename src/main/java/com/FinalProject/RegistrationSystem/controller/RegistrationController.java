@@ -1,6 +1,7 @@
 package com.FinalProject.RegistrationSystem.controller;
 
 import com.FinalProject.RegistrationSystem.dto.CreateRegistrationRequest;
+import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.service.RegistrationService;
 import com.FinalProject.RegistrationSystem.model.Registration;
 import jakarta.transaction.Transactional;
@@ -17,7 +18,7 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/workshops/{id}/registrations")
-    public Registration register(@PathVariable Long id, @RequestBody Long userId){
+    public Registration register(@PathVariable Long id, @RequestParam Long userId){
         return registrationService.register(id, userId);
     }
 
@@ -27,7 +28,7 @@ public class RegistrationController {
     }
 
     @DeleteMapping("/registrations/{registrationId}")
-    public void cancelRegistration(@PathVariable Long registrationId, @RequestParam Long userId){
-        registrationService.cancelRegistration(registrationId, userId);
+    public Registration cancelRegistration(@PathVariable Long registrationId, @RequestParam Long userId){
+        return registrationService.cancelRegistration(registrationId, userId);
     }
 }

@@ -27,7 +27,7 @@ public class WorkshopService {
         workshop.setDescription(request.description);
         workshop.setLocation(request.location);
         workshop.setStart_datetime(request.start_datetime);
-        workshop.setStatus(Workshop.workshopStatus.ACTIVE);
+        workshop.setWorkshopStatus(Workshop.workshopStatus.ACTIVE);
         workshop.setTotal_seats(request.total_seats);
         workshop.setSeats_remaining(request.total_seats);
 
@@ -67,10 +67,12 @@ public class WorkshopService {
     }
 
     @Transactional
-    public void cancelWorkshop(Long id) {
+    public Workshop cancelWorkshop(Long id) {
         Workshop workshop = workshopRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Workshop not found"));
 
-        workshop.setStatus(Workshop.workshopStatus.CANCELLED);
+        workshop.setWorkshopStatus(Workshop.workshopStatus.CANCELLED);
+
+        return workshopRepository.save(workshop);
     }
 }

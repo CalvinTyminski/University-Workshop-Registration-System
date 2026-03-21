@@ -31,8 +31,8 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}/cancel")
-    public void cancel(@PathVariable Long id) {
-        workshopService.cancelWorkshop(id);
+    public Workshop cancel(@PathVariable Long id) {
+        return workshopService.cancelWorkshop(id);
     }
 
     @GetMapping("/{id}/registrations")

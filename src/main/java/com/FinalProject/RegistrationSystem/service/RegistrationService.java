@@ -63,7 +63,7 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void cancelRegistration(Long registrationId, Long userId) {
+    public Registration cancelRegistration(Long registrationId, Long userId) {
         Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(
                         () -> new BadRequestException("Registration not found")
@@ -79,6 +79,8 @@ public class RegistrationService {
         registration.setCancelled_at(LocalDateTime.now());
 
         workshop.setSeats_remaining(workshop.getSeats_remaining() +1);
+
+        return registrationRepository.save(registration);
     }
 
     public List<Registration> getAllWorkshopRegistrations(Long workshopId) {
