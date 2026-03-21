@@ -18,11 +18,6 @@ public class WorkshopService {
 
     @Transactional
     public Workshop create(CreateWorkshopRequest request) {
-
-        if (request.start_datetime.isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Workshop must be in the future");
-        }
-
         Workshop workshop = new Workshop();
         workshop.setTitle(request.title);
         workshop.setDescription(request.description);
