@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px gray;
+            border-radius: 8px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+
+    <form method="post" th:action="@{/login}">
+        <input type="email" name="email" placeholder="Enter your email" required />
+        <button type="submit">Login</button>
+    </form>
+
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+</div>
+
+</body>
+</html>
