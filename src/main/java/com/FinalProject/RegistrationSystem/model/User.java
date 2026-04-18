@@ -1,10 +1,6 @@
 package com.FinalProject.RegistrationSystem.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +20,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     @Column(nullable = false, unique = true)
     private String email;
     private String password_hash;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
