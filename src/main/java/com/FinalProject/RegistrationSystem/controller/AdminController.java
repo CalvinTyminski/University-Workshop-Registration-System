@@ -5,6 +5,7 @@ import com.FinalProject.RegistrationSystem.model.Registration;
 import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.service.RegistrationService;
 import com.FinalProject.RegistrationSystem.service.WorkshopService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +22,12 @@ public class AdminController {
     private RegistrationService registrationService;
 
     @PostMapping
-    public Workshop create(@RequestBody CreateWorkshopRequest request) {
+    public Workshop create(@Valid @RequestBody CreateWorkshopRequest request) {
         return workshopService.create(request);
     }
 
     @PutMapping("/{id}")
-    public Workshop update(@PathVariable Long id, @RequestBody Workshop updated) {
+    public Workshop update(@PathVariable Long id,@Valid @RequestBody Workshop updated) {
         return workshopService.update(id, updated);
     }
 
