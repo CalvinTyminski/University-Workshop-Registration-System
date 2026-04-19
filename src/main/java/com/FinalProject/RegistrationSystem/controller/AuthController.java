@@ -25,30 +25,25 @@ public class AuthController {
     private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     public AuthController(AuthenticationManager authenticationManager,
                           CustomUserDetailsService userDetailsService,
                           JwtUtil jwtUtil,
                           UserRepository userRepository,
-                          RoleRepository roleRepository,
                           PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
     public String register(@RequestBody User user) {
-        Role userRole = roleRepository.findByName("USER")
-                .orElseThrow(() -> new RuntimeException("Role not found — please insert roles first"));
 
         user.setPassword_hash(passwordEncoder.encode(user.getPassword_hash()));
-        user.setRoles(Collections.singleton(userRole));
+        user.setRole(User.Role.ATTENDEE);
 
         userRepository.save(user);
         return "User registered successfully!";
@@ -56,7 +51,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, String> login(@Valid @RequestBody Map<String, String> loginData) {
-        String username = loginData.get("username");
+        String username = loginData.get("email");
         String password = loginData.get("password");
 
         authenticationManager.authenticate(
