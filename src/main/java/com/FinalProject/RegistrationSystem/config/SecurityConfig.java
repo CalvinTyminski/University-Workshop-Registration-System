@@ -50,7 +50,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // public
-                        .requestMatchers("/", "/login", "/register", "/register/**", "/css/**").permitAll()
                         .requestMatchers("/api/v1/workshops/**").permitAll()
                         .requestMatchers("/","/workshops/{id}", "/login", "/register", "/css/**").permitAll()
 

@@ -55,51 +55,47 @@
 
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
+    <div class="container">
 
-    <h2>Workshop Details</h2>
+        <h2>Workshop Details</h2>
 
-    <div class="card">
+        <div class="card">
 
-        <h3 th:text="${workshop.title}"></h3>
+            <h3 th:text="${workshop.title}"></h3>
 
-        <p>
-            <strong>Location:</strong>
-            <span th:text="${workshop.location}"></span>
-        </p>
+            <p>
+                <strong>Location:</strong>
+                <span th:text="${workshop.location}"></span>
+            </p>
 
-        <p>
-            <strong>Start:</strong>
-            <span th:text="${workshop.start_datetime}"></span>
-        </p>
+            <p>
+                <strong>Start:</strong>
+                <span th:text="${workshop.start_datetime}"></span>
+            </p>
 
-        <p>
-            <strong>Seats Remaining:</strong>
-            <span th:text="${workshop.seats_remaining}"></span>
-        </p>
+            <p>
+                <strong>Seats Remaining:</strong>
+                <span th:text="${workshop.seats_remaining}"></span>
+            </p>
 
-        <p>
-            <strong>Description:</strong>
-            <span th:text="${workshop.description}"></span>
-        </p>
+            <p>
+                <strong>Description:</strong>
+                <span th:text="${workshop.description}"></span>
+            </p>
 
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
-                <button class="btn" type="submit">Register</button>
-            </form>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
+                    <button class="btn" type="submit">Register</button>
+                </form>
+                <div th:if="${success}" style="color:green;">
+                    <p th:text="${success}"></p>
+                </div>
+            </div>
+
         </div>
 
     </div>
-
-</div>
-
-<form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
-    <button type="submit">Register</button>
-    <div th:if="${success}" style="color:green;">
-        <p th:text="${success}"></p>
-    </div>
-</form>
 </body>
 </html>

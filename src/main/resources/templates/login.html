@@ -73,41 +73,24 @@
 
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-
-    <div class="card">
-
-        <h2>Login</h2>
-
-        <form method="post" action="/perform_login">
-
-            <input type="email" name="username" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-
-            <button type="submit">Login</button>
-
-        </form>
-<h2>Login</h2>
-<div th:if="${errorMessage}" style="color:red;">
-    <p th:text="${errorMessage}"></p>
-</div>
-
-<form method="post" action="/perform_login">
-    <input type="email" name="username" placeholder="Email"/>
-    <input type="password" name="password" placeholder="Password"/>
-    <button type="submit">Login</button>
-</form>
-
-        <div class="register-link">
-            <p>Don't have an account?</p>
-            <a th:href="@{/register}">Register</a>
+    <div class="container">
+        <div class="card">
+            <h2>Login</h2>
+            <div th:if="${errorMessage}" style="color:red;">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <form method="post" action="/perform_login">
+                <input type="email" name="username" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <button type="submit">Login</button>
+            </form>
+            <div class="register-link">
+                <p>Don't have an account?</p>
+                <a th:href="@{/register}">Register</a>
+            </div>
         </div>
-
     </div>
-
-</div>
-
 </body>
 </html>

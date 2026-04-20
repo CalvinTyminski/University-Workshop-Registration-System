@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -32,7 +33,8 @@ public class AuthController {
     @PostMapping("/register")
     public String register(
             @Valid @ModelAttribute("user")CreateUserRequest request,
-            BindingResult result) {
+            BindingResult result,
+            RedirectAttributes redirect) {
 
         if (result.hasErrors()) {
             return "register";
@@ -46,6 +48,7 @@ public class AuthController {
 
         userRepository.save(user);
 
+        redirect.addFlashAttribute("success", "Registration successful!");
         return "redirect:/login";
     }
 
