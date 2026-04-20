@@ -41,7 +41,7 @@ public class PageController {
             Model model) {
 
         if (error != null) {
-            model.addAttribute("errorMessage", "Invalid email or password");
+            model.addAttribute("error", "Invalid email or password");
         }
 
         return "login";
