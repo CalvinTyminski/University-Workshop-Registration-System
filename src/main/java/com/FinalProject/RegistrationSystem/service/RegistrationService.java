@@ -99,9 +99,6 @@ public class RegistrationService {
         return registrationRepository.findByWorkshopId(workshopId);
     }
 
-    public List<Registration> getAllUserRegistrations(Long userId) {
-        return registrationRepository.findByUserId(userId);
-    }
 
     public List<Registration> getAllUserRegistrationsByEmail(String email) {
         User user = userRepository.findByEmail(email)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Register</title>
 
@@ -90,6 +90,20 @@
             <button type="submit">Create Account</button>
 
         </form>
+<h2>Register</h2>
+<form th:action="@{/register}" th:object="${user}" method="post">
+
+    <input type="text" th:field="*{name}" placeholder="Name"/>
+    <div th:errors="*{name}" style="color:red;"></div>
+
+    <input type="email" th:field="*{email}" placeholder="Email"/>
+    <div th:errors="*{email}" style="color:red;"></div>
+
+    <input type="password" th:field="*{password}" placeholder="Password"/>
+    <div th:errors="*{password}" style="color:red;"></div>
+
+    <button type="submit">Create Account</button>
+</form>
 
         <div class="login-link">
             <p>Already have an account?</p>

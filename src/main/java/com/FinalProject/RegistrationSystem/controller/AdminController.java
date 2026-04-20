@@ -1,11 +1,14 @@
 package com.FinalProject.RegistrationSystem.controller;
 
 import com.FinalProject.RegistrationSystem.dto.CreateWorkshopRequest;
+import com.FinalProject.RegistrationSystem.dto.WorkshopForm;
 import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.service.WorkshopService;
 import com.FinalProject.RegistrationSystem.service.RegistrationService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -31,13 +34,20 @@ public class AdminController {
     // CREATE PAGE
     @GetMapping("/new")
     public String createForm(Model model) {
-        model.addAttribute("workshop", new CreateWorkshopRequest());
+        model.addAttribute("workshop", new WorkshopForm());
         return "admin/admin-create";
     }
 
     // CREATE
     @PostMapping
-    public String create(@ModelAttribute CreateWorkshopRequest workshop) {
+    public String create(
+            @Valid @ModelAttribute("workshop") CreateWorkshopRequest workshop,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "admin/admin-create";
+        }
+
         workshopService.create(workshop);
         return "redirect:/admin/workshops";
     }

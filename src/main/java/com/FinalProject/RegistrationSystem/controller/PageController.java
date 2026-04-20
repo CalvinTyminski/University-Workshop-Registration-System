@@ -1,5 +1,7 @@
 package com.FinalProject.RegistrationSystem.controller;
 
+import com.FinalProject.RegistrationSystem.dto.CreateUserRequest;
+import com.FinalProject.RegistrationSystem.model.User;
 import com.FinalProject.RegistrationSystem.service.WorkshopService;
 import com.FinalProject.RegistrationSystem.service.RegistrationService;
 import org.springframework.stereotype.Controller;
@@ -34,20 +36,26 @@ public class PageController {
 
     // LOGIN PAGE
     @GetMapping("/login")
-    public String login() {
+    public String login(
+            @RequestParam(value = "error", required = false) String error,
+            Model model) {
+
+        if (error != null) {
+            model.addAttribute("errorMessage", "Invalid email or password");
+        }
+
         return "login";
     }
-
     // REGISTER PAGE
     @GetMapping("/register")
     public String registerPage(Model model) {
-        model.addAttribute("user", new com.FinalProject.RegistrationSystem.model.User());
+        model.addAttribute("user", new CreateUserRequest());
         return "register";
     }
 
     @GetMapping("/my/registrations")
     public String myRegistrations(org.springframework.security.core.Authentication auth, Model model) {
-        String email = auth.getName(); // logged-in user
+        String email = auth.getName();
 
         model.addAttribute("registrations",
                 registrationService.getAllUserRegistrationsByEmail(email));
