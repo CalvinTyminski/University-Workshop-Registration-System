@@ -4,6 +4,7 @@ import com.FinalProject.RegistrationSystem.service.RegistrationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegistrationController {
@@ -16,11 +17,12 @@ public class RegistrationController {
 
     // REGISTER
     @PostMapping("/workshops/{id}/register")
-    public String register(@PathVariable Long id, Authentication authentication) {
+    public String register(@PathVariable Long id, Authentication authentication, RedirectAttributes redirect) {
         System.out.println("LOGGED IN USER: " + authentication.getName());
         String email = authentication.getName();
 
         registrationService.registerByEmail(id, email);
+        redirect.addFlashAttribute("success", "Registration successful!");
 
         return "redirect:/my/registrations";
     }

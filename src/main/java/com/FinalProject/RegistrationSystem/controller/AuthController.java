@@ -1,5 +1,7 @@
 package com.FinalProject.RegistrationSystem.controller;
 
+import com.FinalProject.RegistrationSystem.dto.CreateUserRequest;
+import com.FinalProject.RegistrationSystem.dto.RegisterForm;
 import com.FinalProject.RegistrationSystem.model.User;
 import com.FinalProject.RegistrationSystem.repository.UserRepository;
 import com.FinalProject.RegistrationSystem.security.user.CustomUserDetailsService;
@@ -9,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -33,12 +37,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user) {
+    public String register(
+            @Valid @ModelAttribute("user")RegisterForm form,
+            BindingResult result) {
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(user.getRole() != null ? user.getRole() : User.Role.ATTENDEE);
+        if (result.hasErrors()) {
+            return "register";
+        }
+
+        User user = new User();
+        user.setName(form.name);
+        user.setEmail(form.email);
+        user.setPassword(passwordEncoder.encode(form.password));
+        user.setRole(User.Role.ATTENDEE);
 
         userRepository.save(user);
+
         return "redirect:/login";
     }
 

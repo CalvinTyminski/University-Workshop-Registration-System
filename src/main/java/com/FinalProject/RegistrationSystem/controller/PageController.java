@@ -34,10 +34,16 @@ public class PageController {
 
     // LOGIN PAGE
     @GetMapping("/login")
-    public String login() {
+    public String login(
+            @RequestParam(value = "error", required = false) String error,
+            Model model) {
+
+        if (error != null) {
+            model.addAttribute("errorMessage", "Invalid email or password");
+        }
+
         return "login";
     }
-
     // REGISTER PAGE
     @GetMapping("/register")
     public String registerPage(Model model) {

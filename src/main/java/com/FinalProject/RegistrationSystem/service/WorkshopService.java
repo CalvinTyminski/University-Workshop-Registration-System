@@ -2,6 +2,7 @@ package com.FinalProject.RegistrationSystem.service;
 
 import com.FinalProject.RegistrationSystem.dto.CreateWorkshopRequest;
 import com.FinalProject.RegistrationSystem.exception.BadRequestException;
+import com.FinalProject.RegistrationSystem.exception.ConflictException;
 import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.repository.WorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class WorkshopService {
     @Transactional
     public Workshop create(CreateWorkshopRequest request) {
         if (request.start_datetime.isBefore(LocalDateTime.now())) {
-            throw new BadRequestException("Workshop must be in the future");
+            throw new ConflictException("Workshop must be in the future");
         }
         Workshop workshop = new Workshop();
         workshop.setTitle(request.title);

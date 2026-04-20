@@ -11,6 +11,9 @@
 
 <form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
     <button type="submit">Register</button>
+    <div th:if="${success}" style="color:green;">
+        <p th:text="${success}"></p>
+    </div>
 </form>
 </body>
 </html>

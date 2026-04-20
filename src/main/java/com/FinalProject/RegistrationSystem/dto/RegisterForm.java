@@ -1,26 +1,19 @@
 package com.FinalProject.RegistrationSystem.dto;
 
-import com.FinalProject.RegistrationSystem.model.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class CreateUserRequest {
+public class RegisterForm {
+
     @NotBlank(message = "Name is required")
     public String name;
-    @Valid
-    @Email(message = "Email is invalid")
+
+    @Email(message = "Invalid email")
     @NotBlank(message = "Email is required")
     public String email;
-    @Valid
+
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     public String password;
-
-    private User.Role role;
 }
