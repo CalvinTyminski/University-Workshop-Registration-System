@@ -2,18 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Workshops</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<h2>Workshops (Upcoming)</h2>
 
-<h1>Workshops</h1>
-<div th:each="w : ${workshops}">
+<div th:each="w : ${workshops}" class="card">
+
     <h3 th:text="${w.title}"></h3>
-    <p th:text="${w.location}"></p>
-    <p th:text="${w.start_datetime}"></p>
-    <p th:text="${w.seats_remaining} + ' seats left'"></p>
 
-    <a th:href="@{'/workshops/' + ${w.id}}">View</a>
+    <p>
+        Date & Time:
+        <span th:text="${w.start_datetime}"></span>
+    </p>
+
+    <p>
+        Location:
+        <span th:text="${w.location}"></span>
+    </p>
+
+    <p>
+        Seats Remaining:
+        <span th:text="${w.seats_remaining}"></span>
+    </p>
+
+    <a th:href="@{'/workshops/' + ${w.id}}">View Details</a>
+
 </div>
-
 </body>
 </html>
