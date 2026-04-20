@@ -1,34 +1,36 @@
 package com.FinalProject.RegistrationSystem.controller;
 
-import com.FinalProject.RegistrationSystem.dto.CreateRegistrationRequest;
-import com.FinalProject.RegistrationSystem.model.Workshop;
 import com.FinalProject.RegistrationSystem.service.RegistrationService;
-import com.FinalProject.RegistrationSystem.model.Registration;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/v1")
+@Controller
 public class RegistrationController {
 
-    @Autowired
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
 
-    @PostMapping("/workshops/{id}/registrations")
-    public Registration register(@PathVariable Long id, @RequestParam Long userId){
-        return registrationService.register(id, userId);
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
-    @GetMapping("/me/registrations")
-    public List<Registration> getMyRegistrations(@RequestParam Long userId){
-        return registrationService.getAllUserRegistrations(userId);
+    // REGISTER
+    @PostMapping("/workshops/{id}/register")
+    public String register(@PathVariable Long id, Authentication authentication) {
+        System.out.println("LOGGED IN USER: " + authentication.getName());
+        String email = authentication.getName();
+
+        registrationService.registerByEmail(id, email);
+
+        return "redirect:/my/registrations";
     }
 
-    @DeleteMapping("/registrations/{registrationId}")
-    public Registration cancelRegistration(@PathVariable Long registrationId, @RequestParam Long userId){
-        return registrationService.cancelRegistration(registrationId, userId);
+    // CANCEL
+    @PostMapping("/registrations/{id}/cancel")
+    public String cancel(@PathVariable ("id") Long registrationId, Authentication authentication) {
+
+        String email = authentication.getName();
+        registrationService.cancelByEmail(registrationId, email);
+        return "redirect:/my/registrations";
     }
 }

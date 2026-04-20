@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Workshops</title>
+</head>
+<body>
+
+<h1>Workshops</h1>
+<div th:each="w : ${workshops}">
+    <h3 th:text="${w.title}"></h3>
+    <p th:text="${w.location}"></p>
+    <p th:text="${w.start_datetime}"></p>
+    <p th:text="${w.seats_remaining} + ' seats left'"></p>
+
+    <a th:href="@{'/workshops/' + ${w.id}}">View</a>
+</div>
+
+</body>
+</html>

@@ -15,7 +15,7 @@ public class CreateUserRequest {
     public String email;
     @Valid
     @Min(value = 8, message = "Password must be at least 8 characters")
-    public String password_hash;
+    public String password;
 
     @Enumerated(EnumType.STRING)
     private User.Role role;

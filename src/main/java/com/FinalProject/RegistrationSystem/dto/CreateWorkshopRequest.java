@@ -10,18 +10,25 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CreateWorkshopRequest {
-    @Valid
-    @NotBlank(message = "Title must not be blank")
+
     public String title;
     public String description;
-    @Valid
-    @NotBlank(message = "Location must not be blank")
     public String location;
-    @Valid
-    @NotNull(message = "Start date must not be empty")
-    @Future(message = "Start date must be in the future")
     public LocalDateTime start_datetime;
-    @Valid
-    @Min(value = 1, message = "Quantity must be at least 1")
     public int total_seats;
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+
+    public LocalDateTime getStart_datetime() { return start_datetime; }
+    public void setStart_datetime(LocalDateTime start_datetime) { this.start_datetime = start_datetime; }
+
+    public int getTotal_seats() { return total_seats; }
+    public void setTotal_seats(int total_seats) { this.total_seats = total_seats; }
 }

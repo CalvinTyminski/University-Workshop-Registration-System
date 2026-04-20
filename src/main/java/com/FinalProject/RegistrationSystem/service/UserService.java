@@ -22,7 +22,7 @@ public class UserService {
         User user = new User();
         user.setName(request.name);
         user.setEmail(request.email);
-        user.setPassword_hash(request.password_hash);
+        user.setPassword(request.password);
         user.setRole(User.Role.ATTENDEE);
 
         return userRepository.save(user);

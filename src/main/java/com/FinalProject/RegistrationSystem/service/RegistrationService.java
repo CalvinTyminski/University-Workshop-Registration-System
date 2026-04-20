@@ -28,16 +28,18 @@ public class RegistrationService {
     private WorkshopRepository workshopRepository;
 
     @Transactional
-    public Registration register(Long id, Long userId) {
+    public Registration registerByEmail(Long id, String email) {
         Workshop workshop = workshopRepository.findById(id)
                 .orElseThrow(
                         () -> new BadRequestException("Workshop does not exist")
                 );
 
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(
                         () -> new BadRequestException("User does not exist")
                 );
+
+        System.out.println("USER ID FROM DB: " + user.getId());
 
         if (workshop.getSeats_remaining()<=0) {
             throw new ConflictException("Workshop is full");
@@ -63,11 +65,19 @@ public class RegistrationService {
     }
 
     @Transactional
-    public Registration cancelRegistration(Long registrationId, Long userId) {
+    public Registration cancelByEmail(Long registrationId, String email) {
         Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(
                         () -> new BadRequestException("Registration not found")
                 );
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+
+        if (!registration.getUser().getId().equals(user.getId())) {
+            throw new BadRequestException("You can only cancel your own registrations");
+        }
 
         Workshop workshop = registration.getWorkshop();
 
@@ -89,5 +99,12 @@ public class RegistrationService {
 
     public List<Registration> getAllUserRegistrations(Long userId) {
         return registrationRepository.findByUserId(userId);
+    }
+
+    public List<Registration> getAllUserRegistrationsByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return registrationRepository.findByUserId(user.getId());
     }
 }

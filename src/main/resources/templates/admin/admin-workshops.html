@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Workshops</title>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<a href="/admin/workshops/new">Create Workshop</a>
+
+<div th:each="w : ${workshops}">
+    <h3 th:text="${w.title}"></h3>
+    <p th:text="${w.workshopStatus}"></p>
+
+    <a th:href="@{/admin/workshops/{id}/edit(id=${w.id})}">Edit</a>
+
+    <form th:action="@{/admin/workshops/{id}/cancel(id=${w.id})}" method="post">
+        <button type="submit">Cancel</button>
+    </form>
+</div>
+
+</body>
+</html>

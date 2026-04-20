@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/admin/workshops/{id}(id=${workshop.id})}"
+      th:object="${workshop}"
+      method="post">
+
+    <input th:field="*{title}" placeholder="Title"/>
+    <input th:field="*{location}" placeholder="Location"/>
+    <input th:field="*{total_seats}" type="number"/>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
