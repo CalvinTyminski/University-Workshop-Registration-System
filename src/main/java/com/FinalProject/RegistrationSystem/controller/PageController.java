@@ -20,21 +20,18 @@ public class PageController {
         this.registrationService = registrationService;
     }
 
-    // HOME PAGE
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("workshops", workshopService.getAll());
         return "home";
     }
 
-    // WORKSHOP DETAILS
     @GetMapping("/workshops/{id}")
     public String workshopDetails(@PathVariable Long id, Model model) {
         model.addAttribute("workshop", workshopService.getById(id));
         return "workshop-details";
     }
 
-    // LOGIN PAGE
     @GetMapping("/login")
     public String login(
             @RequestParam(required = false) String error,
@@ -46,7 +43,7 @@ public class PageController {
 
         return "login";
     }
-    // REGISTER PAGE
+
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("user", new CreateUserRequest());
