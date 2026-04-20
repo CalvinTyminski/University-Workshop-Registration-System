@@ -37,7 +37,7 @@ public class PageController {
     // LOGIN PAGE
     @GetMapping("/login")
     public String login(
-            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(required = false) String error,
             Model model) {
 
         if (error != null) {

@@ -72,7 +72,13 @@
 </head>
 
 <body>
+<div th:if="${success}" style="color:green;">
+    <p th:text="${success}"></p>
+</div>
 
+<div th:if="${error}" style="color:red;">
+    <p th:text="${error}"></p>
+</div>
     <div th:replace="fragments/header :: header"></div>
 
     <div class="container">
@@ -89,9 +95,6 @@
                 <div th:errors="*{password}" style="color:red;"></div>
 
                 <button type="submit">Create Account</button>
-                <div th:if="${success}" style="color:green;">
-                    <p th:text="${success}"></p>
-                </div>
             </form>
             <div class="login-link">
                 <p>Already have an account?</p>

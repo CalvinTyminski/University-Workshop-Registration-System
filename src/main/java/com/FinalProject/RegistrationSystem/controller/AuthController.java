@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(
-            @Valid @ModelAttribute("user")CreateUserRequest request,
+            @Valid @ModelAttribute("user") CreateUserRequest request,
             BindingResult result,
             RedirectAttributes redirect) {
 
@@ -40,16 +40,23 @@ public class AuthController {
             return "register";
         }
 
-        User user = new User();
-        user.setName(request.name);
-        user.setEmail(request.email);
-        user.setPassword(passwordEncoder.encode(request.password));
-        user.setRole(User.Role.ATTENDEE);
+        try {
+            User user = new User();
+            user.setName(request.name);
+            user.setEmail(request.email);
+            user.setPassword(passwordEncoder.encode(request.password));
+            user.setRole(User.Role.ATTENDEE);
 
-        userRepository.save(user);
+            userRepository.save(user);
 
-        redirect.addFlashAttribute("success", "Registration successful!");
-        return "redirect:/login";
+            redirect.addFlashAttribute("success", "Account created successfully!");
+
+            return "redirect:/login";
+
+        } catch (Exception ex) {
+            redirect.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/register";
+        }
     }
 
 }

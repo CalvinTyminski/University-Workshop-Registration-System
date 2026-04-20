@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/workshops")
@@ -40,16 +41,25 @@ public class AdminController {
 
     // CREATE
     @PostMapping
-    public String create(
-            @Valid @ModelAttribute("workshop") CreateWorkshopRequest workshop,
-            BindingResult result) {
+    public String create(@Valid @ModelAttribute CreateWorkshopRequest workshop,
+                         BindingResult result,
+                         RedirectAttributes redirect) {
 
         if (result.hasErrors()) {
             return "admin/admin-create";
         }
 
-        workshopService.create(workshop);
-        return "redirect:/admin/workshops";
+        try {
+            workshopService.create(workshop);
+
+            redirect.addFlashAttribute("success", "Workshop created!");
+
+            return "redirect:/admin/workshops";
+
+        } catch (Exception ex) {
+            redirect.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/admin/workshops/new";
+        }
     }
 
     // EDIT PAGE

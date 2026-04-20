@@ -17,22 +17,36 @@ public class RegistrationController {
 
 
     @PostMapping("/workshops/{id}/register")
-    public String register(@PathVariable Long id, Authentication authentication, RedirectAttributes redirect) {
-        System.out.println("LOGGED IN USER: " + authentication.getName());
-        String email = authentication.getName();
+    public String register(@PathVariable Long id,
+                           Authentication auth,
+                           RedirectAttributes redirect) {
 
-        registrationService.registerByEmail(id, email);
-        redirect.addFlashAttribute("success", "Registration successful!");
+        try {
+            registrationService.registerByEmail(id, auth.getName());
+
+            redirect.addFlashAttribute("success", "Registered successfully!");
+
+        } catch (Exception ex) {
+            redirect.addFlashAttribute("error", ex.getMessage());
+        }
 
         return "redirect:/my/registrations";
     }
 
-
     @PostMapping("/registrations/{id}/cancel")
-    public String cancel(@PathVariable ("id") Long registrationId, Authentication authentication) {
+    public String cancel(@PathVariable Long id,
+                         Authentication auth,
+                         RedirectAttributes redirect) {
 
-        String email = authentication.getName();
-        registrationService.cancelByEmail(registrationId, email);
+        try {
+            registrationService.cancelByEmail(id, auth.getName());
+
+            redirect.addFlashAttribute("success", "Registration cancelled");
+
+        } catch (Exception ex) {
+            redirect.addFlashAttribute("error", ex.getMessage());
+        }
+
         return "redirect:/my/registrations";
     }
 }
