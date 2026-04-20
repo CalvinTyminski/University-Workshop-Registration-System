@@ -9,13 +9,13 @@
 <form th:action="@{/register}" th:object="${user}" method="post">
 
     <input type="text" th:field="*{name}" placeholder="Name"/>
-    <div th:errors="*{name}"></div>
+    <div th:errors="*{name}" style="color:red;"></div>
 
     <input type="email" th:field="*{email}" placeholder="Email"/>
-    <div th:errors="*{email}"></div>
+    <div th:errors="*{email}" style="color:red;"></div>
 
     <input type="password" th:field="*{password}" placeholder="Password"/>
-    <div th:errors="*{password}"></div>
+    <div th:errors="*{password}" style="color:red;"></div>
 
     <button type="submit">Create Account</button>
 </form>

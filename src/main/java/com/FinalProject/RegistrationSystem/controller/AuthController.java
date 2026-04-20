@@ -1,22 +1,15 @@
 package com.FinalProject.RegistrationSystem.controller;
 
 import com.FinalProject.RegistrationSystem.dto.CreateUserRequest;
-import com.FinalProject.RegistrationSystem.dto.RegisterForm;
 import com.FinalProject.RegistrationSystem.model.User;
 import com.FinalProject.RegistrationSystem.repository.UserRepository;
 import com.FinalProject.RegistrationSystem.security.user.CustomUserDetailsService;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class AuthController {
@@ -38,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(
-            @Valid @ModelAttribute("user")RegisterForm form,
+            @Valid @ModelAttribute("user")CreateUserRequest request,
             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -46,9 +39,9 @@ public class AuthController {
         }
 
         User user = new User();
-        user.setName(form.name);
-        user.setEmail(form.email);
-        user.setPassword(passwordEncoder.encode(form.password));
+        user.setName(request.name);
+        user.setEmail(request.email);
+        user.setPassword(passwordEncoder.encode(request.password));
         user.setRole(User.Role.ATTENDEE);
 
         userRepository.save(user);
