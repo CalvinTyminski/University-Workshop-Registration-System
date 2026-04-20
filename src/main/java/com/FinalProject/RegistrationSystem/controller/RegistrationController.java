@@ -14,7 +14,7 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    // REGISTER
+
     @PostMapping("/workshops/{id}/register")
     public String register(@PathVariable Long id, Authentication authentication) {
         System.out.println("LOGGED IN USER: " + authentication.getName());
@@ -25,7 +25,7 @@ public class RegistrationController {
         return "redirect:/my/registrations";
     }
 
-    // CANCEL
+
     @PostMapping("/registrations/{id}/cancel")
     public String cancel(@PathVariable ("id") Long registrationId, Authentication authentication) {
 

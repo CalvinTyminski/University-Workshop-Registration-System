@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Workshop Details</title>
+
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f4f4;
         }
-
 
         .container {
             width: 80%;
@@ -22,8 +22,7 @@
 
         .card {
             background: white;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
             border-radius: 6px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
@@ -32,21 +31,69 @@
             margin-top: 0;
         }
 
-        .card a {
+        .card p {
+            margin: 8px 0;
+        }
+
+        .btn {
             display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #0056b3;
         }
     </style>
 </head>
-<body>
-<div th:replace="fragments/header :: header"></div>
-<h2 th:text="${workshop.title}"></h2>
-<p th:text="${workshop.description}"></p>
-<p>Seats: <span th:text="${workshop.seats_remaining}"></span></p>
 
-<form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
-    <button type="submit">Register</button>
-</form>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+
+    <h2>Workshop Details</h2>
+
+    <div class="card">
+
+        <h3 th:text="${workshop.title}"></h3>
+
+        <p>
+            <strong>Location:</strong>
+            <span th:text="${workshop.location}"></span>
+        </p>
+
+        <p>
+            <strong>Start:</strong>
+            <span th:text="${workshop.start_datetime}"></span>
+        </p>
+
+        <p>
+            <strong>Seats Remaining:</strong>
+            <span th:text="${workshop.seats_remaining}"></span>
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            <span th:text="${workshop.description}"></span>
+        </p>
+
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/workshops/{id}/register(id=${workshop.id})}" method="post">
+                <button class="btn" type="submit">Register</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>

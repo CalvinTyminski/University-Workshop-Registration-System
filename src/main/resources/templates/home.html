@@ -42,7 +42,7 @@
 <div th:replace="fragments/header :: header"></div>
 <h2>Workshops (Upcoming)</h2>
 
-<div th:each="w : ${workshops}" class="card">
+<div th:each="w : ${workshops}" th:if="${w.workshopStatus.name() != 'CANCELLED'}" class="card">
 
     <h3 th:text="${w.title}"></h3>
 

@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin Workshops</title>
+
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f4f4;
         }
-
 
         .container {
             width: 80%;
@@ -31,28 +31,96 @@
             margin-top: 0;
         }
 
-        .card a {
-            display: inline-block;
+        .actions {
             margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        a {
+            text-decoration: none;
             color: #007bff;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b52a37;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .top-actions {
+            margin-bottom: 20px;
         }
     </style>
 </head>
+
 <body>
+
 <div th:replace="fragments/header :: header"></div>
-<h2>Admin Dashboard</h2>
 
-<a href="/admin/workshops/new">Create Workshop</a>
+<div class="container">
 
-<div th:each="w : ${workshops}">
-    <h3 th:text="${w.title}"></h3>
-    <p th:text="${w.workshopStatus}"></p>
+    <h2>Admin Dashboard</h2>
 
-    <a th:href="@{/admin/workshops/{id}/edit(id=${w.id})}">Edit</a>
+    <div class="top-actions">
+        <a class="btn btn-primary" href="/admin/workshops/new">+ Create Workshop</a>
+    </div>
 
-    <form th:action="@{/admin/workshops/{id}/cancel(id=${w.id})}" method="post">
-        <button type="submit">Cancel</button>
-    </form>
+    <div  th:each="w : ${workshops}" th:if="${w.workshopStatus.name() != 'CANCELLED'}" class="card">
+
+        <h3 th:text="${w.title}"></h3>
+
+        <p>
+            <strong>Date:</strong>
+            <span th:text="${w.start_datetime}"></span>
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            <span th:text="${w.workshopStatus}"></span>
+        </p>
+
+        <div class="actions">
+
+            <a class="btn btn-primary"
+               th:href="@{/admin/workshops/{id}/edit(id=${w.id})}">
+                Edit
+            </a>
+
+            <form th:action="@{/admin/workshops/{id}/cancel(id=${w.id})}" method="post">
+                <button class="btn btn-danger" type="submit">
+                    Cancel
+                </button>
+            </form>
+
+            <a th:href="@{/admin/workshops/{id}/registrations(id=${w.id})}">
+                View Registrations
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
 
 </body>
