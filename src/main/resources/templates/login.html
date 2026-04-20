@@ -4,7 +4,7 @@
     <title>Login</title>
 </head>
 <body>
-
+<div th:replace="fragments/header :: header"></div>
 <h2>Login</h2>
 <div th:if="${errorMessage}" style="color:red;">
     <p th:text="${errorMessage}"></p>
