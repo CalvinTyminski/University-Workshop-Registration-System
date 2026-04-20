@@ -10,7 +10,7 @@
     <p th:text="${r.workshop.title}"></p>
     <p th:text="${r.registrationStatus}"></p>
 
-    <form th:action="@{'/registrations/' + ${r.id}}" method="post">
+    <form th:action="@{/registrations/{id}/cancel(id=${r.id})}" method="post">
         <button type="submit">Cancel</button>
     </form>
 </div>

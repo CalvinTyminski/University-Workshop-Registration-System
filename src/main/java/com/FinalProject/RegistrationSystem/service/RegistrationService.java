@@ -90,6 +90,8 @@ public class RegistrationService {
 
         workshop.setSeats_remaining(workshop.getSeats_remaining() +1);
 
+        workshopRepository.save(workshop);
+
         return registrationRepository.save(registration);
     }
 
